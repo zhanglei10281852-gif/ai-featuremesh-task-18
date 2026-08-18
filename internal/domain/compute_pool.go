@@ -76,14 +76,6 @@ func (c *ComputePool) StartReconciliation(now time.Time) error {
 	return nil
 }
 
-func (c ComputePool) CompletedReconciliation(now time.Time) (ComputePool, error) {
-	copy := c
-	if err := copy.CompleteReconciliation(now); err != nil {
-		return ComputePool{}, err
-	}
-	return copy, nil
-}
-
 func (c *ComputePool) CompleteReconciliation(now time.Time) error {
 	if c.State != ComputePoolReconciling {
 		return TransitionError{Entity: "compute_pool", From: string(c.State), To: string(ComputePoolAvailable)}

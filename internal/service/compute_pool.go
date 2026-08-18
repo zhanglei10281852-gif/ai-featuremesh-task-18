@@ -18,12 +18,7 @@ func (s *ComputePoolService) StartReconciliation(ctx context.Context, compute_po
 
 func (s *ComputePoolService) CompleteReconciliation(ctx context.Context, compute_poolID string) (domain.ComputePool, error) {
 	return s.change(ctx, compute_poolID, "compute_pool_reconciliation_completed", func(compute_pool *domain.ComputePool) error {
-		completed, err := compute_pool.CompletedReconciliation(s.clock.Now())
-		if err != nil {
-			return err
-		}
-		_ = completed
-		return nil
+		return compute_pool.CompleteReconciliation(s.clock.Now())
 	})
 }
 
